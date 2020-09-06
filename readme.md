@@ -7,7 +7,7 @@ also:
 - removes `*?|^:"<>` characters from the file-name
 - reducing multiple spaces, dots, and underscores
 - adds rename-date suffix to ensure uniquness of the filename
-- strips exec-flag from non-executive types ()
+- strips exec-flag from non-executive types (usual leftover from FAT/NTFS)
 - optimizes images while at it (shows reduction size in `kb` and `%`)
 
 
