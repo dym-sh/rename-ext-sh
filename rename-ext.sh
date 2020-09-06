@@ -40,7 +40,7 @@ rename_ext()
   EXT="$2"
   NOTE="$3"
   TARGET=''
-  if [[ "$OPTIONS" ~= 'only-ext' ]]; then
+  if [[ "$OPTIONS" =~ 'only-ext' ]]; then
     NAME_NO_EXT=` echo "$NAME" \
            | sd -f i "(\.+($ALL_EXTS))$" '' \
            `
@@ -60,12 +60,12 @@ rename_ext()
   if [ "$NAME" != "$TARGET" ]; then
     echo "$FILENAME"
 
-    if [[ "$OPTIONS" ~= 'test-run' ]]; then
+    if [[ "$OPTIONS" =~ 'test-run' ]]; then
       [ -f "$FILENAME" ] \
         && echo "replacing existing '$TARGET'"
       echo " >> $TARGET"
     else
-      if [[ ! "$OPTIONS" ~= 'only-ext' ]]; then
+      if [[ ! "$OPTIONS" =~ 'only-ext' ]]; then
         chmod -x "$FILENAME"
 
         SIZE_PRE=` stat "$FILENAME" -c '%s' `
@@ -80,11 +80,11 @@ rename_ext()
         NOTE=` calc_reduction "$SIZE_PRE" "$SIZE_POST" `
       fi
 
-      if [ ! -f "$FILENAME" ]; then
+      if [ ! -f "$TARGET" ]; then
         mv "$NAME" "$TARGET"
         echo "$NOTE >> $TARGET"
       else
-        if [[ "$PARAMS" ~= 'force-replace' ]]; then
+        if [[ "$PARAMS" =~ 'force-replace' ]]; then
           echo "replacing existing '$TARGET'"
           mv "$NAME" "$TARGET"
           echo "$NOTE >> $TARGET"
@@ -106,6 +106,7 @@ for PARAM in "$@"; do
     OPTIONS="$OPTIONS;force-replace"
   fi
 done
+echo "OPTIONS: '$OPTIONS'"
 
 
 for FILENAME in "$@"; do
