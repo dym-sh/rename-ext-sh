@@ -144,7 +144,7 @@ for FILENAME in "$@"; do
   "application/msword") rename_ext "$FILENAME" "doc" ;;
   "application/vnd.ms-excel") rename_ext "$FILENAME" "xls" ;;
   "application/x-shockwave-flash") rename_ext "$FILENAME" "swf" ;;
-  # "application/pdf") rename_ext "$FILENAME" "pdf" ;; # can be .ai
+  "application/pdf") ;; # rename_ext "$FILENAME" "pdf" ;; # can be .ai
 
   # audio
   "audio/flac") rename_ext "$FILENAME" "flac" ;;
@@ -165,16 +165,17 @@ for FILENAME in "$@"; do
   "video/3gpp") rename_ext "$FILENAME" "3gp" ;;
 
   # text
-  # "text/html") rename_ext "$FILENAME" "html" ;; # can be .htm, .htc, .mht, ...
-  # "text/x-shellscript") rename_ext "$FILENAME" "sh" ;; # can have no .<ext>
-  # "text/x-python") rename_ext "$FILENAME" "py" ;; # can be .py3, have no .<ext>
-
-  # any
-  "application/octet-stream") ;; # can be anything
+  "text/html") ;; # rename_ext "$FILENAME" "html" ;; # can be .htm, .htc, .mht, ...
+  "text/x-shellscript") ;; # rename_ext "$FILENAME" "sh" ;; # can have no .<ext>
+  "text/x-python") ;; # rename_ext "$FILENAME" "py" ;; # can be .py3, have no .<ext>
+  "application/json") ;; # rename_ext "$FILENAME" "json" ;; # can be any other language
 
   # special
-  "inode/directory") ;; # literally a folder
+  "application/octet-stream") ;; # can be anything
+  "inode/directory") ;; # a folder
+  "inode/x-empty") ;; # zero-size
 
+  # default
   *) echo "!!  $FILENAME : $filetype" ;;
 
   esac
