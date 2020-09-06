@@ -54,3 +54,13 @@ to only print a report:
 **Q**: why not just rename files to hashes of their contents, and store original filenames in some database?
 
 **A**: good point. that database is in my case a filesystem itself.
+
+
+## mirrors
+- [github](https://gituhb.com/dym-sh/rename-ext-sh/)
+- [src.dym.sh](https://src.dym.sh/rename-ext-sh/)
+- `hyper://5e6376d12e75970b95ce254192716da1ce13623f40d4725c2e483a21150571be/` [[?](https://beakerbrowser.com)]
+
+
+## license
+[mit](./LICENSE)
