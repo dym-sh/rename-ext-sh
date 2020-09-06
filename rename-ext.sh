@@ -114,69 +114,70 @@ for FILENAME in "$@"; do
   [ ! -f "$FILENAME" ] \
     && continue
 
-  filetype=` file -b --mime-type "$FILENAME" `
-  case "$filetype" in
+  FILE_TYPE=` file -b --mime-type "$FILENAME" `
+  case "$FILE_TYPE" in
 
   # pixel-based
-  "image/gif") rename_ext "$FILENAME" "gif" ;;
-  "image/jpeg") rename_ext "$FILENAME" "jpg" ;;
-  "image/png") rename_ext "$FILENAME" "png" ;;
-  "image/webp") rename_ext "$FILENAME" "webp" ;;
+  'image/gif') rename_ext "$FILENAME" 'gif' ;;
+  'image/jpeg') rename_ext "$FILENAME" 'jpg' ;;
+  'image/png') rename_ext "$FILENAME" 'png' ;;
+  'image/webp') rename_ext "$FILENAME" 'webp' ;;
 
   # vector-based
-  "image/svg+xml") rename_ext "$FILENAME" "svg" ;;
-  "image/x-eps") rename_ext "$FILENAME" "eps" ;;
+  'image/svg+xml') rename_ext "$FILENAME" 'svg' ;;
+  'image/x-eps') rename_ext "$FILENAME" 'eps' ;;
 
   # some less common image formats
-  "image/x-tga") rename_ext "$FILENAME" "tga" ;;
-  "image/tiff") rename_ext "$FILENAME" "tiff" ;;
-  "image/vnd.adobe.photoshop") rename_ext "$FILENAME" "psd" ;;
-  "image/vnd.microsoft.icon") rename_ext "$FILENAME" "ico" ;;
-  "image/x-xcf") rename_ext "$FILENAME" "xcf" ;;
+  'image/tiff') rename_ext "$FILENAME" 'tiff' ;;
+  'image/vnd.adobe.photoshop') rename_ext "$FILENAME" 'psd' ;;
+  'image/vnd.microsoft.icon') rename_ext "$FILENAME" 'ico' ;;
+  'image/x-tga') rename_ext "$FILENAME" 'tga' ;;
+  'image/x-xcf') rename_ext "$FILENAME" 'xcf' ;;
 
   # fonts
-  "application/vnd.ms-fontobject") rename_ext "$FILENAME" "eot" ;;
-  "application/vnd.ms-opentype") rename_ext "$FILENAME" "otf" ;;
-  "font/sfnt") rename_ext "$FILENAME" "ttf" ;;
+  'application/vnd.ms-fontobject') rename_ext "$FILENAME" 'eot' ;;
+  'application/vnd.ms-opentype') rename_ext "$FILENAME" 'otf' ;;
+  'font/sfnt') rename_ext "$FILENAME" 'ttf' ;;
 
   # documents
-  "application/epub+zip") rename_ext "$FILENAME" "epub" ;;
-  "application/msword") rename_ext "$FILENAME" "doc" ;;
-  "application/vnd.ms-excel") rename_ext "$FILENAME" "xls" ;;
-  "application/x-shockwave-flash") rename_ext "$FILENAME" "swf" ;;
-  "application/pdf") ;; # rename_ext "$FILENAME" "pdf" ;; # can be .ai
+  'application/epub+zip') rename_ext "$FILENAME" 'epub' ;;
+  'application/msword') rename_ext "$FILENAME" 'doc' ;;
+  'application/pdf') ;; # can be .ai
+  'application/vnd.ms-excel') rename_ext "$FILENAME" 'xls' ;;
+  'application/x-shockwave-flash') rename_ext "$FILENAME" 'swf' ;;
 
   # audio
-  "audio/flac") rename_ext "$FILENAME" "flac" ;;
-  "audio/mpeg") rename_ext "$FILENAME" "mp3" ;;
-  "audio/ogg") rename_ext "$FILENAME" "ogg" ;;
-  "audio/x-m4a") rename_ext "$FILENAME" "m4a" ;;
-  "audio/x-wav") rename_ext "$FILENAME" "wav" ;;
+  'audio/flac') rename_ext "$FILENAME" 'flac' ;;
+  'audio/mpeg') rename_ext "$FILENAME" 'mp3' ;;
+  'audio/ogg') rename_ext "$FILENAME" 'ogg' ;;
+  'audio/x-m4a') rename_ext "$FILENAME" 'm4a' ;;
+  'audio/x-wav') rename_ext "$FILENAME" 'wav' ;;
 
   # video
-  "video/av1") rename_ext "$FILENAME" "avi" ;;
-  "video/MP2T") rename_ext "$FILENAME" "mp2" ;;
-  "video/mp4") rename_ext "$FILENAME" "mp4" ;;
-  "video/x-m4v") rename_ext "$FILENAME" "mp4" ;;
-  "video/quicktime") rename_ext "$FILENAME" "mov" ;;
-  "video/webm") rename_ext "$FILENAME" "webm" ;;
-  "video/x-matroska") rename_ext "$FILENAME" "mkv" ;;
-  "video/x-ms-asf") rename_ext "$FILENAME" "asf" ;;
-  "video/3gpp") rename_ext "$FILENAME" "3gp" ;;
+  'video/3gpp') rename_ext "$FILENAME" '3gp' ;;
+  'video/av1') rename_ext "$FILENAME" 'avi' ;;
+  'video/MP2T') rename_ext "$FILENAME" 'mp2' ;;
+  'video/mp4') rename_ext "$FILENAME" 'mp4' ;;
+  'video/quicktime') rename_ext "$FILENAME" 'mov' ;;
+  'video/webm') rename_ext "$FILENAME" 'webm' ;;
+  'video/x-m4v') rename_ext "$FILENAME" 'mp4' ;;
+  'video/x-matroska') rename_ext "$FILENAME" 'mkv' ;;
+  'video/x-ms-asf') rename_ext "$FILENAME" 'asf' ;;
 
   # text
-  "text/html") ;; # rename_ext "$FILENAME" "html" ;; # can be .htm, .htc, .mht, ...
-  "text/x-shellscript") ;; # rename_ext "$FILENAME" "sh" ;; # can have no .<ext>
-  "text/x-python") ;; # rename_ext "$FILENAME" "py" ;; # can be .py3, have no .<ext>
-  "application/json") ;; # rename_ext "$FILENAME" "json" ;; # can be any other language
+  'application/json') ;; # can be any other language
+  'text/html') ;; # can be .htm, .htc, .mht, ...
+  'text/plain') ;; # can be any file with not enough text
+  'text/x-python') ;; # can be .py3, have no .ext
+  'text/x-shellscript') ;; # can be .zsh, have no .ext
 
   # special
-  "application/octet-stream") ;; # can be anything
-  "inode/directory") ;; # a folder
-  "inode/x-empty") ;; # zero-size
+  'application/octet-stream') ;; # can be anything
+  'inode/directory') ;; # a folder
+  'inode/x-empty') ;; # zero-size
 
   # default
-  *) echo "!!  $FILENAME : $filetype" ;;
+  *) echo "!!  $FILENAME : $FILE_TYPE" ;;
 
   esac
 
