@@ -7,7 +7,7 @@
 
 PREFIX='/usr/local/'
 
-git clone \
+git clone --depth 1 \
   https://github.com/dym-sh/rename-ext-sh.git \
   $PREFIX/src/rename-ext-sh/
 
