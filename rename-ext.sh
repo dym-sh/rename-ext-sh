@@ -39,6 +39,7 @@ rename_ext()
 {
   NAME="$1"
   EXT="$2"
+  NOTE=''
   TARGET=''
   if [[ "$OPTIONS" =~ 'only-ext' ]]; then
     NAME_NO_EXT=` echo "$NAME" \
@@ -46,6 +47,22 @@ rename_ext()
            `
     TARGET="$NAME_NO_EXT.$EXT"
   else
+    if [[ ! "$OPTIONS" =~ 'test-run' ]]; then
+      chmod -x "$FILENAME"
+
+      SIZE_PRE=` stat "$FILENAME" -c '%s' `
+
+      [ "$EXT" = 'jpg' ] \
+        && jpegoptim "$FILENAME" -qsftp
+      [ "$EXT" = 'png' ] \
+        && pngquant "$FILENAME" --output "$FILENAME" \
+             --quality=100 --force --skip-if-larger --speed 1
+
+      SIZE_POST=` stat "$FILENAME" -c '%s' `
+
+      [ $SIZE_PRE -gt $SIZE_POST ] \
+        && NOTE=` calc_reduction "$SIZE_PRE" "$SIZE_POST" `
+    fi
     DATE=` date -r "$NAME" -u "+%Y%m%d%H%M%S" `
     TCLEAN=` echo "$NAME" \
            | sd '[\\\?\*\|^:"<>]+' '_' \
@@ -74,23 +91,6 @@ rename_ext()
     fi
     echo "$TARGET"
   else
-    if [[ ! "$OPTIONS" =~ 'only-ext' ]]; then
-      chmod -x "$FILENAME"
-
-      SIZE_PRE=` stat "$FILENAME" -c '%s' `
-
-      [ "$EXT" = 'jpg' ] \
-        && jpegoptim "$FILENAME" -qsftp
-      [ "$EXT" = 'png' ] \
-        && pngquant "$FILENAME" --output "$FILENAME" \
-             --quality=100 --force --skip-if-larger --speed 1
-
-      SIZE_POST=` stat "$FILENAME" -c '%s' `
-
-      [ $SIZE_PRE -gt $SIZE_POST ] \
-        && NOTE=` calc_reduction "$SIZE_PRE" "$SIZE_POST" `
-    fi
-
     if [ ! -f "$TARGET" ]; then
       echo " >> $NOTE >> "
       echo "$TARGET"
