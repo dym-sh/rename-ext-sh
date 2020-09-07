@@ -2,8 +2,13 @@
 
 ## rename-ext-sh
 # > changes file-extension based on mime-type
+
+## also
+# - removes `*?|^:"<>` characters from the file-name
+# - reducing multiple spaces, dots, and underscores
 # - adds rename-date suffix to ensure uniquness of the filename
-# - optimizes images while at it
+# - strips exec-flag from non-executive types (usual leftover from FAT/NTFS)
+# - optimizes images while at it (shows reduction size in `kb` and `%`)
 
 ## example
 # rename-ext /Data/Pictures/_unsorted/**/*
@@ -17,20 +22,16 @@
 ALL_EXTS='gif|jpe?g|a?png|web(p|m)|svg|eps|tga|tiff?|psd|ico|xcf|eot|otf|ttf|epub|doc|xls|swf|pdf|flac|opus|ogg|m4a|wav|mpe?g|mp\d|mov|mkv|avif?|asf|3gp|html?|sh|py|php'
 
 OPTIONS=''
+NR='1'
 
 calc_reduction()
 {
   SIZE_PRE="$1"
   SIZE_POST="$2"
-  RESULT=''
-
-  if [ $SIZE_PRE -gt $SIZE_POST ]; then
-    PERECENT=` echo "scale=2; 100 - (100 * $SIZE_POST / $SIZE_PRE)" | bc `
-    RESULT="$(( $SIZE_PRE / 1000 ))-$(( ( $SIZE_PRE - $SIZE_POST ) / 1000 )) kb \
+  PERECENT=` echo "scale=2; 100 - (100 * $SIZE_POST / $SIZE_PRE)" | bc `
+  RESULT="$(( $SIZE_PRE / 1000 ))-$(( ( $SIZE_PRE - $SIZE_POST ) / 1000 )) kb \
 ($PERECENT%)
 "
-  fi
-
   echo "$RESULT"
 }
 
@@ -38,7 +39,6 @@ rename_ext()
 {
   NAME="$1"
   EXT="$2"
-  NOTE="$3"
   TARGET=''
   if [[ "$OPTIONS" =~ 'only-ext' ]]; then
     NAME_NO_EXT=` echo "$NAME" \
@@ -57,44 +57,56 @@ rename_ext()
        `
   fi
 
-  if [ "$NAME" != "$TARGET" ]; then
-    echo "$FILENAME"
+  [ "$NAME" = "$TARGET" ] \
+    && return
 
-    if [[ "$OPTIONS" =~ 'test-run' ]]; then
-      [ -f "$FILENAME" ] \
-        && echo "replacing existing '$TARGET'"
-      echo " >> $TARGET"
-    else
-      if [[ ! "$OPTIONS" =~ 'only-ext' ]]; then
-        chmod -x "$FILENAME"
+  echo "$NR:"
+  NR="$(($NR+1))"
+  echo "$FILENAME"
 
-        SIZE_PRE=` stat "$FILENAME" -c '%s' `
-        if [ "$EXT" == 'jpg' ];then
-          jpegoptim "$FILENAME" -qsftp
-        elif [ "$EXT" == 'png' ];then
-          pngquant "$FILENAME" --output "$FILENAME" \
-            --quality=100 --force --skip-if-larger --speed 1
-        fi
-        SIZE_POST=` stat "$FILENAME" -c '%s' `
-
-        NOTE=` calc_reduction "$SIZE_PRE" "$SIZE_POST" `
-      fi
-
-      if [ ! -f "$TARGET" ]; then
-        mv "$NAME" "$TARGET"
-        echo "$NOTE >> $TARGET"
+  if [[ "$OPTIONS" =~ 'test-run' ]]; then
+    if [ -f "$TARGET" ]; then
+      if [[ "$PARAMS" =~ 'force-replace' ]]; then
+        echo " >> replacing existing file >> "
       else
-        if [[ "$PARAMS" =~ 'force-replace' ]]; then
-          echo "replacing existing '$TARGET'"
-          mv "$NAME" "$TARGET"
-          echo "$NOTE >> $TARGET"
-        else
-          echo "File '$TARGET' already exist, use '--force-replace' to overwrite"
-        fi
+        echo " !! file already exist !! "
       fi
     fi
+    echo "$TARGET"
+  else
+    if [[ ! "$OPTIONS" =~ 'only-ext' ]]; then
+      chmod -x "$FILENAME"
 
+      SIZE_PRE=` stat "$FILENAME" -c '%s' `
+
+      [ "$EXT" = 'jpg' ] \
+        && jpegoptim "$FILENAME" -qsftp
+      [ "$EXT" = 'png' ] \
+        && pngquant "$FILENAME" --output "$FILENAME" \
+             --quality=100 --force --skip-if-larger --speed 1
+
+      SIZE_POST=` stat "$FILENAME" -c '%s' `
+
+      [ $SIZE_PRE -gt $SIZE_POST ] \
+        && NOTE=` calc_reduction "$SIZE_PRE" "$SIZE_POST" `
+    fi
+
+    if [ ! -f "$TARGET" ]; then
+      echo " >> $NOTE >> "
+      echo "$TARGET"
+      mv "$NAME" "$TARGET"
+    else
+      if [[ "$PARAMS" =~ 'force-replace' ]]; then
+        echo " >> $NOTE ## replacing existing file >> "
+        echo "$TARGET"
+        mv "$NAME" "$TARGET"
+      else
+        echo ' !! File already exist, use `--force-replace` to overwrite !! '
+        echo "$TARGET"
+      fi
+    fi
   fi
+
 }
 
 for PARAM in "$@"; do
@@ -177,7 +189,7 @@ for FILENAME in "$@"; do
   'inode/x-empty') ;; # zero-size
 
   # default
-  *) echo "!!  $FILENAME : $FILE_TYPE" ;;
+  *) echo "??  $FILENAME : $FILE_TYPE" ;;
 
   esac
 

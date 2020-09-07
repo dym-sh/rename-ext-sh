@@ -2,7 +2,7 @@
 
 > changes file-extension based on mime-type
 
-also:
+### also
 
 - removes `*?|^:"<>` characters from the file-name
 - reducing multiple spaces, dots, and underscores
@@ -11,7 +11,7 @@ also:
 - optimizes images while at it (shows reduction size in `kb` and `%`)
 
 
-## install and use
+## [install](./install.sh) and use
 
 ``` sh
 PREFIX='/usr/local/'
@@ -39,17 +39,17 @@ to only print a report:
 
 ## requires
 
-- `cargo install sd` – better sed
-- pngquant – to compress PNGs
-- jpegoptim – to compress JPEGs
+- [`sd`](https://github.com/chmln/sd) – better sed
+- [`pngquant`](https://github.com/kornelski/pngquant) – to compress PNGs
+- [`jpegoptim`](https://github.com/tjko/jpegoptim) – to compress JPEGs
 
 
-## TODO
+## todo
 - find better determination tool for `application/octet-stream`
 - leverage `fd` to do recursive paralel execution if some of parameters are folders
 
 
-## Q&A
+## q&a
 
 **Q**: why not just rename files to hashes of their contents, and store original filenames in some database?
 
