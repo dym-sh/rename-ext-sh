@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# rename-ext-sh install script
+# rename-ext install script
 
 ## use
 # bash ./install.sh
@@ -8,10 +8,10 @@
 PREFIX='/usr/local/'
 
 git clone --depth 1 \
-  https://github.com/dym-sh/rename-ext-sh.git \
-  $PREFIX/src/rename-ext-sh/
+  https://github.com/dym-sh/rename-ext.git \
+  $PREFIX/src/rename-ext/
 
-chmod +x $PREFIX/src/rename-ext-sh/rename-ext.sh
+chmod +x $PREFIX/src/rename-ext/rename-ext.sh
 
-ln -s $PREFIX/src/rename-ext-sh/rename-ext.sh \
+ln -s $PREFIX/src/rename-ext/rename-ext.sh \
       $PREFIX/bin/rename-ext

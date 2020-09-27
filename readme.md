@@ -1,4 +1,4 @@
-# rename-ext-sh
+# rename-ext
 
 > changes file-extension based on mime-type
 
@@ -17,12 +17,12 @@
 PREFIX='/usr/local/'
 
 git clone --depth 1 \
-  https://github.com/dym-sh/rename-ext-sh.git \
-  $PREFIX/src/rename-ext-sh/
+  https://github.com/dym-sh/rename-ext.git \
+  $PREFIX/src/rename-ext/
 
-chmod +x $PREFIX/src/rename-ext-sh/rename-ext.sh
+chmod +x $PREFIX/src/rename-ext/rename-ext.sh
 
-ln -s $PREFIX/src/rename-ext-sh/rename-ext.sh \
+ln -s $PREFIX/src/rename-ext/rename-ext.sh \
       $PREFIX/bin/rename-ext
 ```
 
@@ -57,8 +57,8 @@ to only print a report:
 
 
 ## mirrors
-- [github](https://github.com/dym-sh/rename-ext-sh/)
-- [src.dym.sh](https://src.dym.sh/rename-ext-sh/)
+- [github](https://github.com/dym-sh/rename-ext/)
+- [lab](https://dym.sh/lab/rename-ext/)
 - `hyper://5e6376d12e75970b95ce254192716da1ce13623f40d4725c2e483a21150571be/` [[?](https://beakerbrowser.com)]
 
 

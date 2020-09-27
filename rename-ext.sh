@@ -1,6 +1,6 @@
 #!/bin/bash
 
-## rename-ext-sh
+## rename-ext
 # > changes file-extension based on mime-type
 
 ## also
@@ -19,7 +19,7 @@
 # - jpegoptim – to compress JPEGs
 
 
-ALL_EXTS='gif|jpe?g|a?png|web(p|m)|svg|eps|tga|tiff?|psd|ico|xcf|eot|otf|ttf|epub|doc|xls|swf|pdf|flac|opus|ogg|m4a|wav|mpe?g|mp\d|mov|mkv|avif?|asf|3gp|html?|sh|py|php'
+ALL_EXTS='gif|jpe?g|jp2|a?png|web(p|m)|svg|eps|tga|tiff?|psd|ico|xcf|eot|otf|ttf|epub|doc|xls|swf|pdf|flac|opus|ogg|m4a|wav|mpe?g|mp\d|mov|mkv|avif?|asf|3gp|html?|sh|py|php'
 
 OPTIONS=''
 NR='1'
@@ -132,6 +132,7 @@ for FILENAME in "$@"; do
   # pixel-based
   'image/gif') rename_ext "$FILENAME" 'gif' ;;
   'image/jpeg') rename_ext "$FILENAME" 'jpg' ;;
+  'image/jp2') rename_ext "$FILENAME" 'jp2' ;;
   'image/png') rename_ext "$FILENAME" 'png' ;;
   'image/webp') rename_ext "$FILENAME" 'webp' ;;
 
