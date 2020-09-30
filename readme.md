@@ -58,7 +58,8 @@ to only print a report:
 
 ## mirrors
 - [github](https://github.com/dym-sh/rename-ext/)
-- [lab](https://dym.sh/lab/rename-ext/)
+- [gitlab](https://gitlab.com/dym-sh/rename-ext/)
+- [dym.sh](https://dym.sh/lab/rename-ext/)
 - `hyper://5e6376d12e75970b95ce254192716da1ce13623f40d4725c2e483a21150571be/` [[?](https://beakerbrowser.com)]
 
 
