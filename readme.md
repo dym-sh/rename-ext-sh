@@ -17,7 +17,7 @@
 PREFIX='~/.local'
 
 git clone --depth 1 \
-  https://github.com/dym-sh/rename-ext.git \
+  https://gitlab.com/dym-sh/rename-ext.git \
   $PREFIX/src/rename-ext/
 
 chmod +x $PREFIX/src/rename-ext/rename-ext.sh
