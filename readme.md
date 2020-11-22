@@ -11,10 +11,10 @@
 - optimizes images while at it (shows reduction size in `kb` and `%`)
 
 
-## [install](./install.sh) and use
+## [install](install.sh) and use
 
 ``` sh
-PREFIX='/usr/local/'
+PREFIX='~/.local'
 
 git clone --depth 1 \
   https://github.com/dym-sh/rename-ext.git \
@@ -57,11 +57,11 @@ to only print a report:
 
 
 ## mirrors
-- [github](https://github.com/dym-sh/rename-ext/)
-- [gitlab](https://gitlab.com/dym-sh/rename-ext/)
-- [dym.sh](https://dym.sh/lab/rename-ext/)
-- `hyper://5e6376d12e75970b95ce254192716da1ce13623f40d4725c2e483a21150571be/` [[?](https://beakerbrowser.com)]
+- https://github.com/dym-sh/rename-ext
+- https://gitlab.com/dym-sh/rename-ext
+- https://dym.sh/rename-ext
+- hyper://481757543392f8dec85e46ad50698efe8ded1a43c7f223cd21617180383e2b23 /[?](https://beakerbrowser.com)
 
 
 ## license
-[mit](./LICENSE)
+[mit](license)
